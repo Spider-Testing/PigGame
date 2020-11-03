@@ -7,16 +7,18 @@ GAME RULES:
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 */
-var scores,roundscore,activeplayer,dice,gameplaying;
+var scores,roundscore,activeplayer,dice,gameplaying,ws;
 scores =[0,0];
 roundscore=0;
 activeplayer=0;
 gameplaying=true;
+// second=0;
 
 //  just shown for learning
 // dice=Math.floor(Math.random()*6)+1;
 // console.log(dice);
 // document.querySelector('#current-'+activeplayer ).textcontent=dice;
+
 
 
 
@@ -45,13 +47,18 @@ document.querySelector('.btn-roll').addEventListener('click',function()
       // 1.generate a random number
    var x=Math.floor(Math.random()*6)+1;
 
-      // 2.display the result using picture of dice
+    // 2.display the result using picture of dice
    var dicedom=document.querySelector('.dice');
    dicedom.style.display='block';
    dicedom.src='dice-' + x + '.png';
 
       // 3.update the round score if the rolled number was not 1
-
+      // if(x==6 && second==6)
+      // {
+      //   scores[activeplayer]=0;
+      //   document.querySelector('#score-' + activeplayer).textContent = scores[activeplayer];
+      //   nextplayer();
+      // }
       if(x!=1)   //if value of dice is other 1 then for that player we will add his score to his
       {          // total score which is roundscore
         roundscore = roundscore + x;  //here we are adding his score to roundscore until he hits 1
@@ -76,8 +83,10 @@ document.querySelector('.btn-roll').addEventListener('click',function()
       // we have done some layout in css for player 1 but we want to switch that layout to player 2
       // when his turns come up so we can use feature of "toggle"
 
-      // what the toggle class does is if that class doesnt have that prop it will remove it
-      // else if its already present it will add it
+      // what the toggle class does is if that class doesnt have that prop it will add it
+      // else if its already present it will remove it
+
+       document.querySelector('.dice').style.display = 'none';
 
         document.querySelector('.player-0-panel').classList.toggle('active');
         document.querySelector('.player-1-panel').classList.toggle('active');
@@ -85,6 +94,7 @@ document.querySelector('.btn-roll').addEventListener('click',function()
        // we want to hide our dice wen player changes so this code
         // document.querySelector('.dice').style.display = 'none';
       }
+      // second=x;
     }
 });
 
@@ -101,8 +111,11 @@ function nextplayer()
       activeplayer=1;
     }
     roundscore=0;
+    second=0;
     document.getElementById('current-0').textContent = '0';
     document.getElementById('current-1').textContent = '0';
+
+    document.querySelector('.dice').style.display = 'none';
 
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
@@ -121,8 +134,20 @@ document.querySelector('.btn-hold').addEventListener('click',function()
    // update the UI
    document.querySelector('#score-' + activeplayer).textContent = scores[activeplayer];
 
+
+   var data;
+   data = document.querySelector('.user').value;
+   if(data)
+   {
+     ws=data;
+   }
+   else
+   {
+     ws=50;
+   }
+
     // check if the player is won
-    if(scores[activeplayer]>=75)
+    if(scores[activeplayer]>=ws)
     {
       document.querySelector('#name-' + activeplayer).textContent = 'Winner !!';
       // when the winner is declared hide the dice.
@@ -152,6 +177,7 @@ function init()
      roundscore=0;
      activeplayer=0;
      gameplaying=true;
+     second=0;
       document.querySelector('.dice').style.display = 'none';
       document.getElementById('score-0').textContent='0';
       document.getElementById('score-1').textContent='0';

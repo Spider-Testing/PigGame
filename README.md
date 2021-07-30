@@ -4,3 +4,4 @@
         1. You need to roll dice and ur score will be added to ur total score till the dice rolls to 1 total score will be reset to 0 and then Player 2's turn will be there.
         2. You can hold if u want to, after any number of turns.
         3. You need to enter the  score (which user has liberty to decide) if not set by defaut its set to 50.
+ This will be a fun Game give it a try !!
